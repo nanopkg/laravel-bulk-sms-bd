@@ -3,6 +3,7 @@
 namespace Nanopkg\LaravelBulkSmsBd\Broadcasting;
 
 use Illuminate\Notifications\Notification;
+use Nanopkg\LaravelBulkSmsBd\Jobs\BulkSmsBdOneToMany;
 use Nanopkg\LaravelBulkSmsBd\Jobs\BulkSmsBdOneToOne;
 
 /**
@@ -28,9 +29,13 @@ class BulkSmsBdChannel
         $notificationArray = $notification->toBulkSmsBd($notifiable);
         // check if contacts and message key exists in notification array
         if ($notificationArray[config('bulksmsbd.notification.contacts')] && $notificationArray[config('bulksmsbd.notification.message')]) {
-            BulkSmsBdOneToOne::dispatch($notificationArray[config('bulksmsbd.notification.contacts')], $notificationArray[config('bulksmsbd.notification.message')]);
+            if (is_array($notificationArray[config('bulksmsbd.notification.contacts')])) {
+                BulkSmsBdOneToMany::dispatch($notificationArray[config('bulksmsbd.notification.contacts')], $notificationArray[config('bulksmsbd.notification.message')]);
+            } else {
+                BulkSmsBdOneToOne::dispatch($notificationArray[config('bulksmsbd.notification.contacts')], $notificationArray[config('bulksmsbd.notification.message')]);
+            }
         } else {
-            throw new \Exception(config('bulksmsbd.notification.contacts').' or '.config('bulksmsbd.notification.message').' not found in Notification array.');
+            throw new \Exception(config('bulksmsbd.notification.contacts') . ' or ' . config('bulksmsbd.notification.message') . ' not found in Notification array.');
         }
     }
 }

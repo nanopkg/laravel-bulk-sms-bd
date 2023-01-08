@@ -129,7 +129,7 @@ return $response->balance;
 
 <hr/>
 
-### One To One SMS Send
+### Send One To One SMS
 
 Follow the below steps to send one to one sms
 
@@ -151,7 +151,7 @@ BulkSmsBdOneToOne::dispatch('017xxxxxxxx', 'আমার সোনার বা�
 
 <hr/>
 
-### One To Many SMS Send
+### Send One To Many SMS
 
 Follow the below steps to send one to Many sms
 
@@ -173,7 +173,7 @@ BulkSmsBdOneToMany::dispatch(['017xxxxxxxx','018xxxxxxxx','019xxxxxxxx'], 'আ�
 
 <hr/>
 
-### Many To Many SMS Send
+### Send Many To Many SMS
 
 Follow the below steps to send Many to Many sms
 
@@ -209,6 +209,54 @@ BulkSmsBdManyToMany::dispatch([
         'message' => 'আমি তোমার ভালোবাসি।'
     ]
 ]);
+```
+
+<hr/>
+
+### Send SMS Via Notification
+
+Follow the below steps to send Many to Many sms
+
+```php
+
+use Nanopkg\LaravelBulkSmsBd\Broadcasting\BulkSmsBdChannel;
+
+/**
+* Get the notification's delivery channels.
+*
+* @param  mixed  $notifiable
+* @return array
+*/
+public function via($notifiable)
+{
+    return [BulkSmsBdChannel::class];
+}
+
+
+/**
+* Get the BulkSmsBd representation of the notification.
+* @param  mixed  $notifiable
+* @return array
+*/
+public function toBulkSmsBd($notifiable)
+{
+    return [
+        'message' => 'আমার সোনার বাংলা, আমি তোমায় ভালোবাসি',
+        'to' => $notifiable->phone,
+    ];
+}
+
+```
+
+If you want to customize Notification representation key then open bulksmsbd config file and modify notification message and contacts value.
+
+```php
+'notification' => [
+    // define your custom notification key for  message
+    'message' => 'message',
+    // define your custom notification key for mobile number
+    'contacts' => 'to',
+],
 ```
 
 ## Testing
