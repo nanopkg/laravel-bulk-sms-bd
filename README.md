@@ -111,6 +111,22 @@ return [
 ];
 ```
 
+Add the following items to your .env file
+
+```php
+// This value is the mode of your laravel-bulk-sms-bd api integration. | log: for testing purpose | live: for live sms sending
+BULK_SMS_BD_MODE='log'
+
+// This value is the api key of your laravel-bulk-sms-bd api integration.
+BULK_SMS_BD_API_KEY=''
+
+// This value is the Sender ID of your laravel-bulk-sms-bd api integration.
+BULK_SMS_BD_SENDER_ID=''
+
+// This value is the Api Url SSL verify of your laravel-bulk-sms-bd api integration.
+BULK_SMS_BD_API_URL_VERIFY=false
+```
+
 ## Usage
 
 <hr/>
