@@ -157,7 +157,9 @@ class BulkSmsBd
      */
     public function getBalance()
     {
-        $response = $this->client()->request('GET', 'miscapi/' . $this->apiKey() . '/getBalance');
+        $response = $this->client()->request('GET', 'getBalanceApi', [
+            'api_key' => $this->apiKey(),
+        ]);
 
         return $response->getBody();
     }

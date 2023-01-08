@@ -47,7 +47,7 @@ return [
     |
     */
 
-    'base_uri' => env('BULK_SMS_BD_API_URL', 'https://esms.mimsms.com/'),
+    'base_uri' => env('BULK_SMS_BD_API_URL', 'https://bulksmsbd.net/api/'),
 
     /*
     |--------------------------------------------------------------------------
