@@ -25,10 +25,12 @@ class BulkSmsBdChannel
      */
     public function send($notifiable, Notification $notification)
     {
-        $message = $notification->toBulkSmsBd($notifiable);
-
-        if ($notifiable->{config('bulksmsbd.notification_for')}) {
-            BulkSmsBdOneToOne::dispatch($notifiable->{config('bulksmsbd.notification_for')}, $message);
+        $notificationArray = $notification->toBulkSmsBd($notifiable);
+        // check if contacts and message key exists in notification array
+        if ($notificationArray[config('bulksmsbd.notification.contacts')] && $notificationArray[config('bulksmsbd.notification.message')]) {
+            BulkSmsBdOneToOne::dispatch($notificationArray[config('bulksmsbd.notification.contacts')], $notificationArray[config('bulksmsbd.notification.message')]);
+        } else {
+            throw new \Exception(config('bulksmsbd.notification.contacts') . ' or ' . config('bulksmsbd.notification.message') . ' not found in Notification array.');
         }
     }
 }

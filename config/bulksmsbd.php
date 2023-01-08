@@ -83,12 +83,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Laravel Bulk SMS BD  Notification For
+    | Laravel Bulk SMS BD  Notification Keys
     |--------------------------------------------------------------------------
     |
-    | This value is the Notification of your laravel-bulk-sms-bd api integration.
+    | This value is the Notification Keys of your laravel-bulk-sms-bd api integration.
     |
     */
-    'notification_for' => 'phone',
+    'notification' => [
+        // define your custom notification key for  message
+        'message' => 'message',
+        // define your custom notification key for mobile number
+        'contacts' => 'to',
+    ],
 
 ];
