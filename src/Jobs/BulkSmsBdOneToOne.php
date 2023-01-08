@@ -12,13 +12,13 @@ use Nanopkg\LaravelBulkSmsBd\Facades\BulkSmsBd;
 /**
  * Class LaravelBulkSmsBdOneToOne
  *
- * @example
- * LaravelBulkSmsBdManyToMany::dispatch(
- *  '88017xxxxxxxx',
- *  'message'
- * );
+ * @example BulkSmsBdOneToOne::dispatch('88017xxxxxxxx', 'message');
+ * @example BulkSmsBdOneToOne::dispatch(['88017xxxxxxxx','88018xxxxxxxx'], 'message');
  *
- * @package Nanopkg\LaravelBulkSmsBd\Jobs
+ * @package Nanopkg\LaravelBulkSmsBd
+ * @author IQBAL HASAN <iqbalhasan.dev@gmail.com>
+ * @link https://iqbalhasan.dev Author Homepage
+ * @license LICENSE The MIT License
  */
 class BulkSmsBdOneToOne implements ShouldQueue
 {
@@ -50,7 +50,7 @@ class BulkSmsBdOneToOne implements ShouldQueue
     public function handle()
     {
         try {
-            return  BulkSmsBd::OneToOne($this->number, $this->message)->send();
+            return  BulkSmsBd::oneToOne($this->number, $this->message)->send();
         } catch (\Throwable $th) {
             throw $th;
         }

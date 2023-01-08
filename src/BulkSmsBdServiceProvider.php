@@ -4,8 +4,15 @@ namespace Nanopkg\LaravelBulkSmsBd;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Nanopkg\LaravelBulkSmsBd\Commands\LaravelBulkSmsBdCommand;
 
+/**
+ * Class LaravelBulkSmsBdServiceProvider
+ *
+ * @package Nanopkg\LaravelBulkSmsBd
+ * @author IQBAL HASAN <iqbalhasan.dev@gmail.com>
+ * @link https://iqbalhasan.dev Author Homepage
+ * @license LICENSE The MIT License
+ */
 class BulkSmsBdServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void

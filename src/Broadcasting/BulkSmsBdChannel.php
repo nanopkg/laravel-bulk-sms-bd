@@ -5,6 +5,14 @@ namespace Nanopkg\LaravelBulkSmsBd\Broadcasting;
 use Illuminate\Notifications\Notification;
 use Nanopkg\LaravelBulkSmsBd\Jobs\BulkSmsBdOneToOne;
 
+/**
+ * Class LaravelBulkSmsBdChannel
+ *
+ * @package Nanopkg\LaravelBulkSmsBd
+ * @author IQBAL HASAN <iqbalhasan.dev@gmail.com>
+ * @link https://iqbalhasan.dev Author Homepage
+ * @license LICENSE The MIT License
+ */
 class BulkSmsBdChannel
 {
     /**

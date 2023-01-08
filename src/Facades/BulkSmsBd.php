@@ -12,7 +12,10 @@ use Illuminate\Support\Facades\Facade;
  * @method static \Nanopkg\LaravelBulkSmsBd\BulkSmsBd send()
  * @method static \Nanopkg\LaravelBulkSmsBd\BulkSmsBd getBalance()
  *
- * @see \Nanopkg\LaravelBulkSmsBd\BulkSmsBd
+ * @package Nanopkg\LaravelBulkSmsBd
+ * @author IQBAL HASAN <iqbalhasan.dev@gmail.com>
+ * @link https://iqbalhasan.dev Author Homepage
+ * @license LICENSE The MIT License
  */
 class BulkSmsBd extends Facade
 {

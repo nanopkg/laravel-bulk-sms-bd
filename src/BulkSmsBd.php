@@ -5,6 +5,23 @@ namespace Nanopkg\LaravelBulkSmsBd;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * Class BulkSmsBd
+ * @method BulkSmsBd OneToOne($contacts, $msg, $type = 'text')
+ * @method BulkSmsBd ManyToMany(array $contacts)
+ * @method BulkSmsBd getBalance()
+ * @method BulkSmsBd send()
+ *
+ * @example getBalance();
+ * @example BulkSmsBd::oneToOne('88017xxxxxxxx', 'message')->send();
+ * @example BulkSmsBd::oneToOne(['88017xxxxxxxx','88018xxxxxxxx'], 'message', 'text')->send();
+ * @example BulkSmsBd::manyToMany([['to'=>'88017xxxxxxxx','message'=>'message1'],['to'=>'88018xxxxxxxx','message'=>'message2']])->send();
+ *
+ * @package Nanopkg\LaravelBulkSmsBd
+ * @author IQBAL HASAN <iqbalhasan.dev@gmail.com>
+ * @link https://iqbalhasan.dev Author Homepage
+ * @license LICENSE The MIT License
+ */
 class BulkSmsBd
 {
     public function __construct()
@@ -86,7 +103,7 @@ class BulkSmsBd
      * @param  string  $msg='test message';
      * @param  string  $type='text';
      */
-    public function OneToOne($contacts, $msg, $type = 'text'): void
+    public function oneToOne($contacts, $msg, $type = 'text')
     {
         // set message
         $this->msg = $msg;
@@ -96,36 +113,30 @@ class BulkSmsBd
         // Check if contacts is array
         if (is_array($contacts)) {
             $numbers = [];
-            foreach ($contacts as $key => $value) {
-                if ($key == 0) {
-                    if (strlen($value) == 11) {
-                        array_push($numbers, $value);
-                    } elseif (strlen($value) == 14) {
-                        array_push($numbers, substr($value, 3, 14));
-                    } else {
-                        throw  new \Exception('Number Not Valid', 1012);
-                    }
-
-                    continue;
-                }
-                if (strlen($value) == 11) {
-                    array_push($numbers, '+88' . $value);
-                } elseif (strlen($value) == 14) {
-                    array_push($numbers, '+88' . substr($value, 3, 14));
+            // foreach contacts
+            foreach ($contacts as $contact) {
+                // Check if contacts is valid
+                if (\preg_match("/^(?:\+88|88)?(01[3-9]\d{8})$/", $contact)) {
+                    // Push contacts to numbers array
+                    array_push($numbers, $contact);
+                } else {
+                    throw  new \Exception('Number Not Valid', 1012);
                 }
             }
-            $contacts = implode('', $numbers);
+            // Implode contacts to string
+            $contacts = \implode(',', $numbers);
         } else {
-            if (strlen($contacts) == 11) {
+            // Check if contacts is valid
+            if (\preg_match("/^(?:\+88|88)?(01[3-9]\d{8})$/", $contacts)) {
                 $contacts = $contacts;
-            } elseif (strlen($contacts) == 14) {
-                $contacts = substr($contacts, 3, 14);
             } else {
                 throw  new \Exception('Number Not Valid', 1012);
             }
         }
         // Set contacts
         $this->contacts = $contacts;
+        // return object
+        return $this;
     }
 
     /**
@@ -133,19 +144,21 @@ class BulkSmsBd
      *
      * @param  array  $contacts=[[to=>'88017xxxxxxxx',message=>'message']];
      */
-    public function ManyToMany(array $contacts): void
+    public function manyToMany(array $contacts)
     {
         if (is_array($contacts)) {
             foreach ($contacts as $key => $value) {
-                if ((!isset($value['message'])) || (!isset($value['to']))) {
-                    throw  new \Exception('Format Not  Valid', 1014);
-                }
+                //  if message is not set or not string throw exception
+                if ((!isset($value['message'])) || !is_string($value['message'])) throw  new \Exception('Massage Not  Valid', 1014);
+                // if to is not set or not valid number throw exception
+                if ((!isset($value['to'])) || !\preg_match("/^(?:\+88|88)?(01[3-9]\d{8})$/", $value['to'])) throw  new \Exception('Number Not  Valid', 1012);
             }
         } else {
             throw  new \Exception('Format Not  Valid', 1014);
         }
         // Set contacts many to many format
         $this->contacts = $contacts;
+        return $this;
     }
 
     /**
@@ -168,32 +181,29 @@ class BulkSmsBd
      *
      * @param $numbers
      * @param $message
-     * @return bool
-     *
-     * @throws \Exception
      */
-    public function send(): void
+    public function send()
     {
         // check if mode is log
         if ($this->logSMS()) {
-            return;
+            return true;
         }
         // check if message is set
         if ($this->msg) {
             $data = [
                 'api_key' => $this->apiKey(),
                 'type' => $this->type,
-                'contacts' => $this->contacts,
+                'number' => $this->contacts,
                 'senderid' => $this->senderID(),
-                'msg' => $this->msg,
+                'message' => $this->msg,
             ];
             $response = $this->client()->post('smsapi', [
                 'form_params' => $data,
             ]);
         } else {
             $data = [
-                'api_key' => self::apiKey(),
-                'senderid' => self::senderID(),
+                'api_key' => $this->apiKey(),
+                'senderid' =>  $this->senderID(),
                 'messages' => json_encode($this->contacts),
             ];
             $response = $this->client()->post('smsapimany', [
@@ -201,7 +211,7 @@ class BulkSmsBd
             ]);
         }
         // validate response
-        $this->validateResponse(\json_decode($response->getBody()));
+        return $this->validateResponse(\json_decode($response->getBody()));
     }
 
     /**
@@ -329,7 +339,6 @@ class BulkSmsBd
 
             default:
                 $this->logError('Validation Error', $response);
-                //   $this->logError('Validation Error', $response);
                 throw  new \Exception('Unknown', -1);
                 break;
         }

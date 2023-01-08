@@ -18,7 +18,10 @@ use Nanopkg\LaravelBulkSmsBd\Facades\BulkSmsBd;
  *     ['to'=>'88017xxxxxxxx','message'=>'message'],
  * ]);
  *
- * @package Nanopkg\LaravelBulkSmsBd\Jobs
+ * @package Nanopkg\LaravelBulkSmsBd
+ * @author IQBAL HASAN <iqbalhasan.dev@gmail.com>
+ * @link https://iqbalhasan.dev Author Homepage
+ * @license LICENSE The MIT License
  */
 class BulkSmsBdManyToMany implements ShouldQueue
 {
