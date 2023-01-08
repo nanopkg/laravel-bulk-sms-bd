@@ -71,7 +71,7 @@ class BulkSmsBd
      */
     private function logSMS(): void
     {
-        if (self::MODE() == 'log') {
+        if ($this->mode() == 'log') {
             $this->logError([
                 'contacts' => $this->contacts,
                 'msg' => $this->msg,
@@ -165,6 +165,47 @@ class BulkSmsBd
     }
 
     /**
+     * If sms sent true return else throws Exception
+     *
+     * @param $numbers
+     * @param $message
+     * @return bool
+     *
+     * @throws \Exception
+     */
+    public function send(): void
+    {
+        // check if mode is log
+        if ($this->logSMS()) {
+            return;
+        }
+        // check if message is set
+        if ($this->msg) {
+            $data = [
+                'api_key' => $this->apiKey(),
+                'type' => $this->type,
+                'contacts' => $this->contacts,
+                'senderid' => $this->senderID(),
+                'msg' => $this->msg,
+            ];
+            $response = $this->client()->post('smsapi', [
+                'form_params' => $data,
+            ]);
+        } else {
+            $data = [
+                'api_key' => self::apiKey(),
+                'senderid' => self::senderID(),
+                'messages' => json_encode($this->contacts),
+            ];
+            $response = $this->client()->post('smsapimany', [
+                'form_params' => $data,
+            ]);
+        }
+        // validate response
+        $this->validateResponse($response);
+    }
+
+    /**
      *Error Code	Meaning
      *1002	Sender Id/Masking Not Found
      *1003	API Not Found
@@ -180,60 +221,8 @@ class BulkSmsBd
      *1013	API limit error
      *1014	No matching template
      */
-
-    /**
-     * If sms sent true return else throws Exception
-     *
-     * @param $numbers
-     * @param $message
-     * @return bool
-     *
-     * @throws \Exception
-     */
-    public function send()
+    private function validateResponse($response)
     {
-        if ($this->logSMS()) {
-            return true;
-        }
-
-        if ($this->msg) {
-            $data = [
-                'api_key' => self::apiKey(),
-                'type' => $this->type,
-                'contacts' => $this->contacts,
-                'senderid' => self::senderID(),
-                'msg' => $this->msg,
-            ];
-            $response = self::CLIENT()->post('smsapi', [
-                'form_params' => $data,
-            ]);
-        } else {
-            $data = [
-                'api_key' => self::apiKey(),
-                'senderid' => self::senderID(),
-                'messages' => json_encode($this->contacts),
-                // 'messages' => json_encode($this->contacts),
-            ];
-            $response = self::CLIENT()->post('smsapimany', [
-                'form_params' => $data,
-            ]);
-        }
-        /**
-         *Error Code	Meaning
-         *1002	Sender Id/Masking Not Found
-         *1003	API Not Found
-         *1004	SPAM Detected
-         *1005	Internal Error
-         *1006	Internal Error
-         *1007	Balance Insufficient
-         *1008	Message is empty
-         *1009	Message Type Not Set (text/unicode)
-         *1010	Invalid User & Password
-         *1011	Invalid User Id
-         *1012	Invalid Number
-         *1013	API limit error
-         *1014	No matching template
-         */
         switch ((string) $response->getBody()) {
             case  1002:
                 $this->logError($response);
@@ -289,8 +278,7 @@ class BulkSmsBd
                 throw new \Exception('No matching template)', 1014);
                 break;
             default:
-                $this->logError($response);
-
+                // $this->logError($response);
                 return true;
                 break;
         }
