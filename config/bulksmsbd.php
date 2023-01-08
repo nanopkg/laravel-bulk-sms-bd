@@ -1,8 +1,16 @@
 <?php
 
-// config for Nanopkg/LaravelBulkSmsBd
+/**
+ * Laravel Bulk SMS BD
+ * config for Nanopkg/LaravelBulkSmsBd
+ *
+ * @author IQBAL HASAN <iqbalhasan.dev@gmail.com>
+ *
+ * @link https://iqbalhasan.dev Author Homepage
+ *
+ * @license LICENSE The MIT License
+ */
 return [
-
 
     /*
     |--------------------------------------------------------------------------
@@ -81,8 +89,6 @@ return [
     | This value is the Notification of your laravel-bulk-sms-bd api integration.
     |
     */
-    'notification_for' => 'phone'
-
-
+    'notification_for' => 'phone',
 
 ];

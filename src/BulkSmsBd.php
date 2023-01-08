@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Log;
 
 /**
  * Class BulkSmsBd
+ *
  * @method BulkSmsBd OneToOne($contacts, $msg, $type = 'text')
  * @method BulkSmsBd ManyToMany(array $contacts)
  * @method BulkSmsBd getBalance()
@@ -17,9 +18,10 @@ use Illuminate\Support\Facades\Log;
  * @example BulkSmsBd::oneToOne(['88017xxxxxxxx','88018xxxxxxxx'], 'message', 'text')->send();
  * @example BulkSmsBd::manyToMany([['to'=>'88017xxxxxxxx','message'=>'message1'],['to'=>'88018xxxxxxxx','message'=>'message2']])->send();
  *
- * @package Nanopkg\LaravelBulkSmsBd
  * @author IQBAL HASAN <iqbalhasan.dev@gmail.com>
+ *
  * @link https://iqbalhasan.dev Author Homepage
+ *
  * @license LICENSE The MIT License
  */
 class BulkSmsBd
@@ -149,15 +151,20 @@ class BulkSmsBd
         if (is_array($contacts)) {
             foreach ($contacts as $key => $value) {
                 //  if message is not set or not string throw exception
-                if ((!isset($value['message'])) || !is_string($value['message'])) throw  new \Exception('Massage Not  Valid', 1014);
+                if ((! isset($value['message'])) || ! is_string($value['message'])) {
+                    throw  new \Exception('Massage Not  Valid', 1014);
+                }
                 // if to is not set or not valid number throw exception
-                if ((!isset($value['to'])) || !\preg_match("/^(?:\+88|88)?(01[3-9]\d{8})$/", $value['to'])) throw  new \Exception('Number Not  Valid', 1012);
+                if ((! isset($value['to'])) || ! \preg_match("/^(?:\+88|88)?(01[3-9]\d{8})$/", $value['to'])) {
+                    throw  new \Exception('Number Not  Valid', 1012);
+                }
             }
         } else {
             throw  new \Exception('Format Not  Valid', 1014);
         }
         // Set contacts many to many format
         $this->contacts = $contacts;
+
         return $this;
     }
 
@@ -173,6 +180,7 @@ class BulkSmsBd
                 'api_key' => $this->apiKey(),
             ],
         ]);
+
         return $this->validateResponse(\json_decode($response->getBody()));
     }
 
@@ -203,7 +211,7 @@ class BulkSmsBd
         } else {
             $data = [
                 'api_key' => $this->apiKey(),
-                'senderid' =>  $this->senderID(),
+                'senderid' => $this->senderID(),
                 'messages' => json_encode($this->contacts),
             ];
             $response = $this->client()->post('smsapimany', [
@@ -297,7 +305,6 @@ class BulkSmsBd
                 throw new \Exception('API limit error', 1013);
                 break;
 
-
             case  1014:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('No matching template', 1014);
@@ -331,7 +338,6 @@ class BulkSmsBd
             case  1020:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('The parent of this account is not found.', 1020);
-
             case  1021:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('The parent active (sender type name) price of this account is not found.', 1021);
@@ -349,7 +355,7 @@ class BulkSmsBd
      *
      * @param $response
      */
-    private function logError($error,  $response = [])
+    private function logError($error, $response = [])
     {
         Log::build([
             'driver' => \config('bulksmsbd.log.driver', 'single'),

@@ -2,12 +2,11 @@
 
 namespace Nanopkg\LaravelBulkSmsBd\Jobs;
 
-
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Nanopkg\LaravelBulkSmsBd\Facades\BulkSmsBd;
 
 /**
@@ -18,22 +17,22 @@ use Nanopkg\LaravelBulkSmsBd\Facades\BulkSmsBd;
  *     ['to'=>'88017xxxxxxxx','message'=>'message'],
  * ]);
  *
- * @package Nanopkg\LaravelBulkSmsBd
  * @author IQBAL HASAN <iqbalhasan.dev@gmail.com>
+ *
  * @link https://iqbalhasan.dev Author Homepage
+ *
  * @license LICENSE The MIT License
  */
 class BulkSmsBdManyToMany implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-
     public $messages;
 
     /**
      * Create a new job instance.
      *
-     * @param array $messages=[[to=>'88017xxxxxxxx',message=>'message']];
+     * @param  array  $messages=[[to=>'88017xxxxxxxx',message=>'message']];
      * @return void
      */
     public function __construct($messages)

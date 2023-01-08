@@ -8,9 +8,10 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 /**
  * Class LaravelBulkSmsBdServiceProvider
  *
- * @package Nanopkg\LaravelBulkSmsBd
  * @author IQBAL HASAN <iqbalhasan.dev@gmail.com>
+ *
  * @link https://iqbalhasan.dev Author Homepage
+ *
  * @license LICENSE The MIT License
  */
 class BulkSmsBdServiceProvider extends PackageServiceProvider
