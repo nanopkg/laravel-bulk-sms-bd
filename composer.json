@@ -47,8 +47,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Nanopkg\\LaravelBulkSmsBd\\": "src",
-            "Nanopkg\\LaravelBulkSmsBd\\Database\\Factories\\": "database/factories"
+            "Nanopkg\\LaravelBulkSmsBd\\": "src"
         }
     },
     "autoload-dev": {
