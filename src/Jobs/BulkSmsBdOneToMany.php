@@ -12,8 +12,7 @@ use Nanopkg\LaravelBulkSmsBd\Facades\BulkSmsBd;
 /**
  * Class LaravelBulkSmsBdOneToOne
  *
- * @example BulkSmsBdOneToOne::dispatch('88017xxxxxxxx', 'message');
-
+ * @example BulkSmsBdOneToOne::dispatch(['88017xxxxxxxx','88018xxxxxxxx'], 'message');
  *
  * @author IQBAL HASAN <iqbalhasan.dev@gmail.com>
  *
@@ -21,7 +20,7 @@ use Nanopkg\LaravelBulkSmsBd\Facades\BulkSmsBd;
  *
  * @license LICENSE The MIT License
  */
-class BulkSmsBdOneToOne implements ShouldQueue
+class BulkSmsBdOneToMany implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -32,11 +31,11 @@ class BulkSmsBdOneToOne implements ShouldQueue
     /**
      * Create a new job instance.
      *
-     * @param  string  $number='88017xxxxxxxx'
+     * @param  array  $number=['88017xxxxxxxx','88018xxxxxxxx']
      * @param  string  $message='message'
      * @return void
      */
-    public function __construct(string $number, string $message)
+    public function __construct(array $number, string $message)
     {
         $this->number = $number;
         $this->message = $message;
@@ -50,7 +49,7 @@ class BulkSmsBdOneToOne implements ShouldQueue
     public function handle()
     {
         try {
-            return  BulkSmsBd::oneToOne($this->number, $this->message)->send();
+            return  BulkSmsBd::oneToMany($this->number, $this->message)->send();
         } catch (\Throwable $th) {
             throw $th;
         }

@@ -8,14 +8,15 @@ use Illuminate\Support\Facades\Log;
 /**
  * Class BulkSmsBd
  *
- * @method BulkSmsBd OneToOne($contacts, $msg, $type = 'text')
- * @method BulkSmsBd ManyToMany(array $contacts)
+ * @method BulkSmsBd oneToOne(string $contacts,string $msg,string $type = 'text')
+ * @method BulkSmsBd oneToMany(array $contacts,string $msg,string $type = 'text')
+ * @method BulkSmsBd manyToMany(array $contacts)
  * @method BulkSmsBd getBalance()
  * @method BulkSmsBd send()
  *
  * @example getBalance();
  * @example BulkSmsBd::oneToOne('88017xxxxxxxx', 'message')->send();
- * @example BulkSmsBd::oneToOne(['88017xxxxxxxx','88018xxxxxxxx'], 'message', 'text')->send();
+ * @example BulkSmsBd::oneToMany(['88017xxxxxxxx','88018xxxxxxxx'], 'message', 'text')->send();
  * @example BulkSmsBd::manyToMany([['to'=>'88017xxxxxxxx','message'=>'message1'],['to'=>'88018xxxxxxxx','message'=>'message2']])->send();
  *
  * @author IQBAL HASAN <iqbalhasan.dev@gmail.com>
@@ -101,40 +102,57 @@ class BulkSmsBd
     /**
      * Set one to one sms sending format
      *
-     * @param $contacts=['88017xxxxxxxx',+'88018xxxxxxxx'];
+     * @param  string  $contacts='88017xxxxxxxx';
      * @param  string  $msg='test message';
      * @param  string  $type='text';
      */
-    public function oneToOne($contacts, $msg, $type = 'text')
+    public function oneToOne(string $contacts, string $msg, string $type = 'text')
     {
+        // Check if contacts is valid
+        if (\preg_match("/^(?:\+88|88)?(01[3-9]\d{8})$/", $contacts)) {
+            $contacts = $contacts;
+        } else {
+            throw  new \Exception('Number Not Valid', 1012);
+        }
+
         // set message
         $this->msg = $msg;
         // set type
         $this->type = $type;
+        // Set contacts
+        $this->contacts = $contacts;
+        // return object
+        return $this;
+    }
 
+    /**
+     * Set one to one sms sending format
+     *
+     * @param  array  $contacts=['88017xxxxxxxx',+'88018xxxxxxxx'];
+     * @param  string  $msg='test message';
+     * @param  string  $type='text';
+     */
+    public function oneToMany(array $contacts, string $msg, string $type = 'text')
+    {
         // Check if contacts is array
-        if (is_array($contacts)) {
-            $numbers = [];
-            // foreach contacts
-            foreach ($contacts as $contact) {
-                // Check if contacts is valid
-                if (\preg_match("/^(?:\+88|88)?(01[3-9]\d{8})$/", $contact)) {
-                    // Push contacts to numbers array
-                    array_push($numbers, $contact);
-                } else {
-                    throw  new \Exception('Number Not Valid', 1012);
-                }
-            }
-            // Implode contacts to string
-            $contacts = \implode(',', $numbers);
-        } else {
+        $numbers = [];
+        // foreach contacts
+        foreach ($contacts as $contact) {
             // Check if contacts is valid
-            if (\preg_match("/^(?:\+88|88)?(01[3-9]\d{8})$/", $contacts)) {
-                $contacts = $contacts;
+            if (\preg_match("/^(?:\+88|88)?(01[3-9]\d{8})$/", $contact)) {
+                // Push contacts to numbers array
+                array_push($numbers, $contact);
             } else {
                 throw  new \Exception('Number Not Valid', 1012);
             }
         }
+        // Implode contacts to string
+        $contacts = \implode(',', $numbers);
+
+        // set message
+        $this->msg = $msg;
+        // set type
+        $this->type = $type;
         // Set contacts
         $this->contacts = $contacts;
         // return object
@@ -148,19 +166,15 @@ class BulkSmsBd
      */
     public function manyToMany(array $contacts)
     {
-        if (is_array($contacts)) {
-            foreach ($contacts as $key => $value) {
-                //  if message is not set or not string throw exception
-                if ((! isset($value['message'])) || ! is_string($value['message'])) {
-                    throw  new \Exception('Massage Not  Valid', 1014);
-                }
-                // if to is not set or not valid number throw exception
-                if ((! isset($value['to'])) || ! \preg_match("/^(?:\+88|88)?(01[3-9]\d{8})$/", $value['to'])) {
-                    throw  new \Exception('Number Not  Valid', 1012);
-                }
+        foreach ($contacts as $key => $value) {
+            //  if message is not set or not string throw exception
+            if ((! isset($value['message'])) || ! is_string($value['message'])) {
+                throw  new \Exception('Massage Not  Valid', 1014);
             }
-        } else {
-            throw  new \Exception('Format Not  Valid', 1014);
+            // if to is not set or not valid number throw exception
+            if ((! isset($value['to'])) || ! \preg_match("/^(?:\+88|88)?(01[3-9]\d{8})$/", $value['to'])) {
+                throw  new \Exception('Number Not  Valid', 1012);
+            }
         }
         // Set contacts many to many format
         $this->contacts = $contacts;

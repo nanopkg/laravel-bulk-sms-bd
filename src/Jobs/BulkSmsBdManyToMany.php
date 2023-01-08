@@ -35,7 +35,7 @@ class BulkSmsBdManyToMany implements ShouldQueue
      * @param  array  $messages=[[to=>'88017xxxxxxxx',message=>'message']];
      * @return void
      */
-    public function __construct($messages)
+    public function __construct(array $messages)
     {
         $this->messages = $messages;
     }

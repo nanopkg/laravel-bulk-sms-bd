@@ -30,7 +30,7 @@ class BulkSmsBdChannel
         if ($notificationArray[config('bulksmsbd.notification.contacts')] && $notificationArray[config('bulksmsbd.notification.message')]) {
             BulkSmsBdOneToOne::dispatch($notificationArray[config('bulksmsbd.notification.contacts')], $notificationArray[config('bulksmsbd.notification.message')]);
         } else {
-            throw new \Exception(config('bulksmsbd.notification.contacts') . ' or ' . config('bulksmsbd.notification.message') . ' not found in Notification array.');
+            throw new \Exception(config('bulksmsbd.notification.contacts').' or '.config('bulksmsbd.notification.message').' not found in Notification array.');
         }
     }
 }
