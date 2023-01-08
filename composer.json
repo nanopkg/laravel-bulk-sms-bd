@@ -4,7 +4,18 @@
     "keywords": [
         "nanopkg",
         "laravel",
-        "laravel-bulk-sms-bd"
+        "laravel-bulk-sms-bd",
+        "package",
+        "library",
+        "Plugin",
+        "bulksmsbd",
+        "laravel-package",
+        "sms-api",
+        "laravel-plugin",
+        "bulksms",
+        "laravel-bulksms",
+        "laravel-bulksmsbd",
+        "laravel-sms-gateway"
     ],
     "homepage": "https://github.com/nanopkg/laravel-bulk-sms-bd",
     "license": "MIT",
