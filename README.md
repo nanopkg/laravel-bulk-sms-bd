@@ -18,7 +18,7 @@ composer require nanopkg/laravel-bulk-sms-bd
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag="laravel-bulk-sms-bd-config"
+php artisan vendor:publish --tag="bulk-sms-bd-config"
 ```
 
 This is the contents of the published config file:
