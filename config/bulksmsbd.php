@@ -70,7 +70,7 @@ return [
     */
     'log' => [
         'driver' => env('BULK_SMS_BD_LOG_DRIVER', 'single'),
-        'path' => env('BULK_SMS_BD_LOG_PATH', storage_path('logs/laravel-bulk-sms-bd-log')),
+        'path' => env('BULK_SMS_BD_LOG_PATH', storage_path('logs/laravel-bulk-sms-bd-log.log')),
     ],
 
     /*
