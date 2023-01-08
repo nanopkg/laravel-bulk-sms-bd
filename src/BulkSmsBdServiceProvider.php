@@ -17,6 +17,6 @@ class BulkSmsBdServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('laravel-bulk-sms-bd')
-            ->hasConfigFile(['bulksmsbd']);
+            ->hasConfigFile();
     }
 }
