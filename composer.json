@@ -17,8 +17,9 @@
     ],
     "require": {
         "php": "^8.1",
-        "spatie/laravel-package-tools": "^1.13.0",
-        "illuminate/contracts": "^9.0"
+        "guzzlehttp/guzzle": "^7.5",
+        "illuminate/contracts": "^9.0",
+        "spatie/laravel-package-tools": "^1.13.0"
     },
     "require-dev": {
         "laravel/pint": "^1.0",
@@ -61,10 +62,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Nanopkg\\LaravelBulkSmsBd\\LaravelBulkSmsBdServiceProvider"
+                "Nanopkg\\LaravelBulkSmsBd\\BulkSmsBdServiceProvider"
             ],
             "aliases": {
-                "LaravelBulkSmsBd": "Nanopkg\\LaravelBulkSmsBd\\Facades\\LaravelBulkSmsBd"
+                "LaravelBulkSmsBd": "Nanopkg\\LaravelBulkSmsBd\\Facades\\BulkSmsBd"
             }
         }
     },

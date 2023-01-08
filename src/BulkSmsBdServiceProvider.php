@@ -6,7 +6,7 @@ use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Nanopkg\LaravelBulkSmsBd\Commands\LaravelBulkSmsBdCommand;
 
-class LaravelBulkSmsBdServiceProvider extends PackageServiceProvider
+class BulkSmsBdServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
@@ -17,9 +17,6 @@ class LaravelBulkSmsBdServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('laravel-bulk-sms-bd')
-            ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_laravel-bulk-sms-bd_table')
-            ->hasCommand(LaravelBulkSmsBdCommand::class);
+            ->hasConfigFile('bulksmsbd');
     }
 }
