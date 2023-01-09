@@ -3,9 +3,10 @@
 With this package you can easily integrate bulk sms system in your project with bulksmsbd.com API of Bangladesh.
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/nanopkg/laravel-bulk-sms-bd.svg?style=flat-square)](https://packagist.org/packages/nanopkg/laravel-bulk-sms-bd)
+[![Issues](https://img.shields.io/github/issues/nanopkg/laravel-bulk-sms-bd.svg?style=flat-square)](https://github.com/nanopkg/laravel-bulk-sms-bd/issues)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/nanopkg/laravel-bulk-sms-bd/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/nanopkg/laravel-bulk-sms-bd/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/nanopkg/laravel-bulk-sms-bd/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/nanopkg/laravel-bulk-sms-bd/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/nanopkg/laravel-bulk-sms-bd.svg?style=flat-square)](https://packagist.org/packages/nanopkg/laravel-bulk-sms-bd)
+[![License](https://img.shields.io/github/license/nanopkg/laravel-bulk-sms-bd.svg?style=flat-square)](https://github.com/nanopkg/laravel-bulk-sms-bd/blob/master/LICENSE.md)
 
 ## Installation
 
