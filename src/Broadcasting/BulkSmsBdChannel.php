@@ -1,13 +1,13 @@
 <?php
 
-namespace Nanopkg\LaravelBulkSmsBd\Broadcasting;
+namespace Nanopkg\BulkSmsBd\Broadcasting;
 
 use Illuminate\Notifications\Notification;
-use Nanopkg\LaravelBulkSmsBd\Jobs\BulkSmsBdOneToMany;
-use Nanopkg\LaravelBulkSmsBd\Jobs\BulkSmsBdOneToOne;
+use Nanopkg\BulkSmsBd\Jobs\BulkSmsBdOneToMany;
+use Nanopkg\BulkSmsBd\Jobs\BulkSmsBdOneToOne;
 
 /**
- * Class LaravelBulkSmsBdChannel
+ * Class BulkSmsBdChannel
  *
  * @author IQBAL HASAN <iqbalhasan.dev@gmail.com>
  *

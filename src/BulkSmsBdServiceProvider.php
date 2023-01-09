@@ -1,12 +1,12 @@
 <?php
 
-namespace Nanopkg\LaravelBulkSmsBd;
+namespace Nanopkg\BulkSmsBd;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 /**
- * Class LaravelBulkSmsBdServiceProvider
+ * Class BulkSmsBdServiceProvider
  *
  * @author IQBAL HASAN <iqbalhasan.dev@gmail.com>
  *

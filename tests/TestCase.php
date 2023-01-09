@@ -1,8 +1,8 @@
 <?php
 
-namespace Nanopkg\LaravelBulkSmsBd\Tests;
+namespace Nanopkg\BulkSmsBd\Tests;
 
-use Nanopkg\LaravelBulkSmsBd\BulkSmsBdServiceProvider;
+use Nanopkg\BulkSmsBd\BulkSmsBdServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra

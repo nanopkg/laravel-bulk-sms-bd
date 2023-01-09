@@ -2,7 +2,7 @@
 
 /**
  * Laravel Bulk SMS BD
- * config for Nanopkg/LaravelBulkSmsBd
+ * config for Nanopkg/BulkSmsBd
  *
  * @author IQBAL HASAN <iqbalhasan.dev@gmail.com>
  *

@@ -1,16 +1,16 @@
 <?php
 
-namespace Nanopkg\LaravelBulkSmsBd\Facades;
+namespace Nanopkg\BulkSmsBd\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
  * class BulkSmsBd
  *
- * @method static \Nanopkg\LaravelBulkSmsBd\BulkSmsBd OneToOne(string $to, string $message)
- * @method static \Nanopkg\LaravelBulkSmsBd\BulkSmsBd ManyToMany(array $to, string $message)
- * @method static \Nanopkg\LaravelBulkSmsBd\BulkSmsBd send()
- * @method static \Nanopkg\LaravelBulkSmsBd\BulkSmsBd getBalance()
+ * @method static \Nanopkg\BulkSmsBd\BulkSmsBd OneToOne(string $to, string $message)
+ * @method static \Nanopkg\BulkSmsBd\BulkSmsBd ManyToMany(array $to, string $message)
+ * @method static \Nanopkg\BulkSmsBd\BulkSmsBd send()
+ * @method static \Nanopkg\BulkSmsBd\BulkSmsBd getBalance()
  *
  * @author IQBAL HASAN <iqbalhasan.dev@gmail.com>
  *
@@ -22,6 +22,6 @@ class BulkSmsBd extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \Nanopkg\LaravelBulkSmsBd\BulkSmsBd::class;
+        return \Nanopkg\BulkSmsBd\BulkSmsBd::class;
     }
 }

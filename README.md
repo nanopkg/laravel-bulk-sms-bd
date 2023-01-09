@@ -137,7 +137,7 @@ BULK_SMS_BD_API_URL_VERIFY=false
 Follow the below steps to get sms gateway balance
 
 ```php
-use Nanopkg\LaravelBulkSmsBd\Facades\BulkSmsBd;
+use Nanopkg\BulkSmsBd\Facades\BulkSmsBd;
 
 // get gateway balance
 $response = BulkSmsBd::getBalance();
@@ -151,7 +151,7 @@ return $response->balance;
 Follow the below steps to send one to one sms
 
 ```php
-use Nanopkg\LaravelBulkSmsBd\Facades\BulkSmsBd;
+use Nanopkg\BulkSmsBd\Facades\BulkSmsBd;
 
 // send one to one sms
 BulkSmsBd::oneToOne('017xxxxxxxx', 'আমার সোনার বাংলা, আমি তোমার ভালোবাসি।')->send();
@@ -160,7 +160,7 @@ BulkSmsBd::oneToOne('017xxxxxxxx', 'আমার সোনার বাংলা
 If you want to send SMS by queue then follow below steps instead of above method.
 
 ```php
-use Nanopkg\LaravelBulkSmsBd\Jobs\BulkSmsBdOneToOne;
+use Nanopkg\BulkSmsBd\Jobs\BulkSmsBdOneToOne;
 
 // send one to one sms
 BulkSmsBdOneToOne::dispatch('017xxxxxxxx', 'আমার সোনার বাংলা, আমি তোমার ভালোবাসি।');
@@ -173,7 +173,7 @@ BulkSmsBdOneToOne::dispatch('017xxxxxxxx', 'আমার সোনার বা�
 Follow the below steps to send one to Many sms
 
 ```php
-use Nanopkg\LaravelBulkSmsBd\Facades\BulkSmsBd;
+use Nanopkg\BulkSmsBd\Facades\BulkSmsBd;
 
 //  Send one to many sms
 BulkSmsBd::oneToMany(['017xxxxxxxx','018xxxxxxxx','019xxxxxxxx'], 'আমার সোনার বাংলা, আমি তোমার ভালোবাসি।')->send();
@@ -182,7 +182,7 @@ BulkSmsBd::oneToMany(['017xxxxxxxx','018xxxxxxxx','019xxxxxxxx'], 'আমার 
 If you want to send SMS by queue then follow below steps instead of above method.
 
 ```php
-use Nanopkg\LaravelBulkSmsBd\Jobs\BulkSmsBdOneToMany;
+use Nanopkg\BulkSmsBd\Jobs\BulkSmsBdOneToMany;
 
 //  Send one to many sms
 BulkSmsBdOneToMany::dispatch(['017xxxxxxxx','018xxxxxxxx','019xxxxxxxx'], 'আমার সোনার বাংলা, আমি তোমার ভালোবাসি।');
@@ -195,7 +195,7 @@ BulkSmsBdOneToMany::dispatch(['017xxxxxxxx','018xxxxxxxx','019xxxxxxxx'], 'আ�
 Follow the below steps to send Many to Many sms
 
 ```php
-use Nanopkg\LaravelBulkSmsBd\Facades\BulkSmsBd;
+use Nanopkg\BulkSmsBd\Facades\BulkSmsBd;
 
 //  Send one to many sms
 BulkSmsBd::manyToMany([
@@ -213,7 +213,7 @@ BulkSmsBd::manyToMany([
 If you want to send SMS Many to Many by queue then follow below steps instead of above method.
 
 ```php
-use Nanopkg\LaravelBulkSmsBd\Jobs\BulkSmsBdManyToMany;
+use Nanopkg\BulkSmsBd\Jobs\BulkSmsBdManyToMany;
 
 //  Send one to many sms
 BulkSmsBdManyToMany::dispatch([
@@ -236,7 +236,7 @@ Follow the below steps to send Many to Many sms
 
 ```php
 
-use Nanopkg\LaravelBulkSmsBd\Broadcasting\BulkSmsBdChannel;
+use Nanopkg\BulkSmsBd\Broadcasting\BulkSmsBdChannel;
 
 /**
 * Get the notification's delivery channels.

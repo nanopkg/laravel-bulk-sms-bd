@@ -1,5 +1,5 @@
 <?php
 
-use Nanopkg\LaravelBulkSmsBd\Tests\TestCase;
+use Nanopkg\BulkSmsBd\Tests\TestCase;
 
 uses(TestCase::class)->in(__DIR__);

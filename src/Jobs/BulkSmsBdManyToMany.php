@@ -1,19 +1,19 @@
 <?php
 
-namespace Nanopkg\LaravelBulkSmsBd\Jobs;
+namespace Nanopkg\BulkSmsBd\Jobs;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Nanopkg\LaravelBulkSmsBd\Facades\BulkSmsBd;
+use Nanopkg\BulkSmsBd\Facades\BulkSmsBd;
 
 /**
- * Class LaravelBulkSmsBdManyToMany
+ * Class BulkSmsBdManyToMany
  *
  * @example
- * LaravelBulkSmsBdManyToMany::dispatch([
+ * BulkSmsBdManyToMany::dispatch([
  *     ['to'=>'88017xxxxxxxx','message'=>'message'],
  * ]);
  *

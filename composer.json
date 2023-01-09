@@ -47,12 +47,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Nanopkg\\LaravelBulkSmsBd\\": "src"
+            "Nanopkg\\BulkSmsBd\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Nanopkg\\LaravelBulkSmsBd\\Tests\\": "tests"
+            "Nanopkg\\BulkSmsBd\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -72,10 +72,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Nanopkg\\LaravelBulkSmsBd\\BulkSmsBdServiceProvider"
+                "Nanopkg\\BulkSmsBd\\BulkSmsBdServiceProvider"
             ],
             "aliases": {
-                "LaravelBulkSmsBd": "Nanopkg\\LaravelBulkSmsBd\\Facades\\BulkSmsBd"
+                "BulkSmsBd": "Nanopkg\\BulkSmsBd\\Facades\\BulkSmsBd"
             }
         }
     },
