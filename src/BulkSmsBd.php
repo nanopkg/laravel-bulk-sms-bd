@@ -168,11 +168,11 @@ class BulkSmsBd
     {
         foreach ($contacts as $key => $value) {
             //  if message is not set or not string throw exception
-            if ((!isset($value['message'])) || !is_string($value['message'])) {
+            if ((! isset($value['message'])) || ! is_string($value['message'])) {
                 throw  new \Exception('Massage Not  Valid', 1014);
             }
             // if to is not set or not valid number throw exception
-            if ((!isset($value['to'])) || !\preg_match("/^(?:\+88|88)?(01[3-9]\d{8})$/", $value['to'])) {
+            if ((! isset($value['to'])) || ! \preg_match("/^(?:\+88|88)?(01[3-9]\d{8})$/", $value['to'])) {
                 throw  new \Exception('Number Not  Valid', 1012);
             }
         }
