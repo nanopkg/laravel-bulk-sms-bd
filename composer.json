@@ -15,7 +15,8 @@
         "bulksms",
         "laravel-bulksms",
         "laravel-bulksmsbd",
-        "laravel-sms-gateway"
+        "laravel-sms-gateway",
+        "laravel-sms-gateway-intregation"
     ],
     "homepage": "https://github.com/nanopkg/laravel-bulk-sms-bd",
     "license": "MIT",
