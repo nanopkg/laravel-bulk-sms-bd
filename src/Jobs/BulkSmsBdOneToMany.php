@@ -46,10 +46,10 @@ class BulkSmsBdOneToMany implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         try {
-            return  BulkSmsBd::oneToMany($this->number, $this->message)->send();
+            BulkSmsBd::OneToMany($this->number, $this->message)->send();
         } catch (\Throwable $th) {
             throw $th;
         }

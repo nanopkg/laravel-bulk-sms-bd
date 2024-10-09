@@ -71,7 +71,7 @@ class BulkSmsBd
      */
     private function mode()
     {
-        return config('bulksmsbd.mode');
+        return config('bulksmsbd.mode', 'log');
     }
 
     /**
@@ -92,7 +92,7 @@ class BulkSmsBd
     private function logSMS(): void
     {
         if ($this->mode() == 'log') {
-            $this->logError([
+            $this->logError(error: [
                 'contacts' => $this->contacts,
                 'msg' => $this->msg,
             ]);
@@ -109,9 +109,7 @@ class BulkSmsBd
     public function oneToOne(string $contacts, string $msg, string $type = 'text')
     {
         // Check if contacts is valid
-        if (\preg_match("/^(?:\+88|88)?(01[3-9]\d{8})$/", $contacts)) {
-            $contacts = $contacts;
-        } else {
+        if (!\preg_match("/^(?:\+88|88)?(01[3-9]\d{8})$/", $contacts)) {
             throw  new \Exception('Number Not Valid', 1012);
         }
 
@@ -207,7 +205,8 @@ class BulkSmsBd
     public function send()
     {
         // check if mode is log
-        if ($this->logSMS()) {
+        if ($this->mode() == 'log') {
+            $this->logSMS();
             return true;
         }
         // check if message is set
@@ -237,7 +236,7 @@ class BulkSmsBd
     }
 
     /**
-     *Error Code	Meaning
+     *Error Code Meaning
      *1002	Sender Id/Masking Not Found
      *1003	API Not Found
      *1004	SPAM Detected
@@ -257,110 +256,69 @@ class BulkSmsBd
         switch ((string) $response->response_code) {
             case  202:
                 return $response;
-                break;
-
             case  1002:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('Sender Id/Masking Not Found', 1002);
-                break;
-
             case  1003:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('API Not Found', 1003);
-                break;
-
             case  1004:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('SPAM Detected', 1004);
-                break;
-
             case  1005:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('Internal Error', 1005);
-                break;
-
             case  1006:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('Internal Error', 1006);
-                break;
-
             case  1007:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('Balance Insufficient', 1007);
-                break;
-
             case  1008:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('Message is empty', 1008);
-                break;
-
             case  1009:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('Message Type Not Set (text/unicode)', 1009);
-                break;
-
             case  1010:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('Invalid User & Password', 1010);
-                break;
-
             case  1011:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('Invalid User Id', 1011);
-                break;
-
             case  1012:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('Invalid Number', 1012);
-                break;
-
             case  1013:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('API limit error', 1013);
-                break;
-
             case  1014:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('No matching template', 1014);
-                break;
-
             case  1015:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('Sender Id has not found Any Valid Gateway by api key', 1015);
-                break;
-
             case  1016:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('Sender Type Name Active Price Info not found by this sender id', 1016);
-                break;
-
             case  1017:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('Sender Type Name Price Info not found by this sender id', 1017);
-                break;
-
             case  1018:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('The Owner of this (username) Account is disabled', 1018);
-                break;
-
             case  1019:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('The (sender type name) Price of this (username) Account is disabled', 1019);
-                break;
-
             case  1020:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('The parent of this account is not found.', 1020);
             case  1021:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('The parent active (sender type name) price of this account is not found.', 1021);
-                break;
-
             default:
                 $this->logError('Validation Error', $response);
                 throw  new \Exception('Unknown', -1);
-                break;
         }
     }
 

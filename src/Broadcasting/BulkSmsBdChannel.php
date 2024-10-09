@@ -3,8 +3,9 @@
 namespace Nanopkg\BulkSmsBd\Broadcasting;
 
 use Illuminate\Notifications\Notification;
-use Nanopkg\BulkSmsBd\Jobs\BulkSmsBdOneToMany;
 use Nanopkg\BulkSmsBd\Jobs\BulkSmsBdOneToOne;
+use Nanopkg\BulkSmsBd\Jobs\BulkSmsBdOneToMany;
+use Nanopkg\BulkSmsBd\Contracts\BulkSmsBdNotification;
 
 /**
  * Class BulkSmsBdChannel
@@ -26,16 +27,20 @@ class BulkSmsBdChannel
      */
     public function send($notifiable, Notification $notification)
     {
-        $notificationArray = $notification->toBulkSmsBd($notifiable);
-        // check if contacts and message key exists in notification array
-        if ($notificationArray[config('bulksmsbd.notification.contacts')] && $notificationArray[config('bulksmsbd.notification.message')]) {
-            if (is_array($notificationArray[config('bulksmsbd.notification.contacts')])) {
-                BulkSmsBdOneToMany::dispatch($notificationArray[config('bulksmsbd.notification.contacts')], $notificationArray[config('bulksmsbd.notification.message')]);
+        if ($notification instanceof BulkSmsBdNotification) {
+            $notificationArray = $notification->toBulkSmsBd($notifiable);
+            // check if contacts and message key exists in notification array
+            if (isset($notificationArray[config('bulksmsbd.notification.contacts')]) && isset($notificationArray[config('bulksmsbd.notification.message')])) {
+                if (is_array($notificationArray[config('bulksmsbd.notification.contacts')])) {
+                    BulkSmsBdOneToMany::dispatch($notificationArray[config('bulksmsbd.notification.contacts')], $notificationArray[config('bulksmsbd.notification.message')]);
+                } else {
+                    BulkSmsBdOneToOne::dispatch($notificationArray[config('bulksmsbd.notification.contacts')], $notificationArray[config('bulksmsbd.notification.message')]);
+                }
             } else {
-                BulkSmsBdOneToOne::dispatch($notificationArray[config('bulksmsbd.notification.contacts')], $notificationArray[config('bulksmsbd.notification.message')]);
+                throw new \Exception(config('bulksmsbd.notification.contacts') . ' or ' . config('bulksmsbd.notification.message') . ' not found in Notification array.');
             }
         } else {
-            throw new \Exception(config('bulksmsbd.notification.contacts').' or '.config('bulksmsbd.notification.message').' not found in Notification array.');
+            throw new \Exception('Notification is missing toBulkSmsBd method.');
         }
     }
 }

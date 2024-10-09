@@ -7,8 +7,9 @@ use Illuminate\Support\Facades\Facade;
 /**
  * class BulkSmsBd
  *
- * @method static \Nanopkg\BulkSmsBd\BulkSmsBd OneToOne(string $to, string $message)
- * @method static \Nanopkg\BulkSmsBd\BulkSmsBd ManyToMany(array $to, string $message)
+ * @method static \Nanopkg\BulkSmsBd\BulkSmsBd OneToOne(string $to, string $message, string $type = 'text')
+ * @method static \Nanopkg\BulkSmsBd\BulkSmsBd OneToMany(array $contacts, string $msg, string $type = 'text')
+ * @method static \Nanopkg\BulkSmsBd\BulkSmsBd ManyToMany(array $contacts)
  * @method static \Nanopkg\BulkSmsBd\BulkSmsBd send()
  * @method static \Nanopkg\BulkSmsBd\BulkSmsBd getBalance()
  *
