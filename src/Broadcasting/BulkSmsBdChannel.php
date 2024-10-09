@@ -3,9 +3,9 @@
 namespace Nanopkg\BulkSmsBd\Broadcasting;
 
 use Illuminate\Notifications\Notification;
-use Nanopkg\BulkSmsBd\Jobs\BulkSmsBdOneToOne;
-use Nanopkg\BulkSmsBd\Jobs\BulkSmsBdOneToMany;
 use Nanopkg\BulkSmsBd\Contracts\BulkSmsBdNotification;
+use Nanopkg\BulkSmsBd\Jobs\BulkSmsBdOneToMany;
+use Nanopkg\BulkSmsBd\Jobs\BulkSmsBdOneToOne;
 
 /**
  * Class BulkSmsBdChannel
@@ -22,7 +22,6 @@ class BulkSmsBdChannel
      * Send the given notification.
      *
      * @param  mixed  $notifiable
-     * @param  \Illuminate\Notifications\Notification  $notification
      * @return void
      */
     public function send($notifiable, Notification $notification)
@@ -37,7 +36,7 @@ class BulkSmsBdChannel
                     BulkSmsBdOneToOne::dispatch($notificationArray[config('bulksmsbd.notification.contacts')], $notificationArray[config('bulksmsbd.notification.message')]);
                 }
             } else {
-                throw new \Exception(config('bulksmsbd.notification.contacts') . ' or ' . config('bulksmsbd.notification.message') . ' not found in Notification array.');
+                throw new \Exception(config('bulksmsbd.notification.contacts').' or '.config('bulksmsbd.notification.message').' not found in Notification array.');
             }
         } else {
             throw new \Exception('Notification is missing toBulkSmsBd method.');

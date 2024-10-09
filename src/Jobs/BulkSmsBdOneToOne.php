@@ -32,8 +32,6 @@ class BulkSmsBdOneToOne implements ShouldQueue
     /**
      * Create a new job instance.
      *
-     * @param  string  $number='88017xxxxxxxx'
-     * @param  string  $message='message'
      * @return void
      */
     public function __construct(string $number, string $message)
@@ -44,8 +42,6 @@ class BulkSmsBdOneToOne implements ShouldQueue
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
     public function handle(): void
     {

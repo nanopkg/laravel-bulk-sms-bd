@@ -31,7 +31,7 @@ class BulkSmsBd
     {
         // Check if api key and sender id is set
         if ($this->mode() != 'log' && ($this->apiKey() == '' || $this->senderID() == '')) {
-            throw  new \Exception('Api Key Or Approved Sender ID dose not match !', 1010);
+            throw new \Exception('Api Key Or Approved Sender ID dose not match !', 1010);
         }
     }
 
@@ -86,8 +86,6 @@ class BulkSmsBd
 
     /**
      * Store Error in log file
-     *
-     * @return void
      */
     private function logSMS(): void
     {
@@ -102,15 +100,13 @@ class BulkSmsBd
     /**
      * Set one to one sms sending format
      *
-     * @param  string  $contacts='88017xxxxxxxx';
-     * @param  string  $msg='test message';
-     * @param  string  $type='text';
+     * @param  string  $msg='test  message';
      */
     public function oneToOne(string $contacts, string $msg, string $type = 'text')
     {
         // Check if contacts is valid
-        if (!\preg_match("/^(?:\+88|88)?(01[3-9]\d{8})$/", $contacts)) {
-            throw  new \Exception('Number Not Valid', 1012);
+        if (! \preg_match("/^(?:\+88|88)?(01[3-9]\d{8})$/", $contacts)) {
+            throw new \Exception('Number Not Valid', 1012);
         }
 
         // set message
@@ -119,6 +115,7 @@ class BulkSmsBd
         $this->type = $type;
         // Set contacts
         $this->contacts = $contacts;
+
         // return object
         return $this;
     }
@@ -126,9 +123,7 @@ class BulkSmsBd
     /**
      * Set one to one sms sending format
      *
-     * @param  array  $contacts=['88017xxxxxxxx',+'88018xxxxxxxx'];
-     * @param  string  $msg='test message';
-     * @param  string  $type='text';
+     * @param  string  $msg='test  message';
      */
     public function oneToMany(array $contacts, string $msg, string $type = 'text')
     {
@@ -141,7 +136,7 @@ class BulkSmsBd
                 // Push contacts to numbers array
                 array_push($numbers, $contact);
             } else {
-                throw  new \Exception('Number Not Valid', 1012);
+                throw new \Exception('Number Not Valid', 1012);
             }
         }
         // Implode contacts to string
@@ -153,25 +148,24 @@ class BulkSmsBd
         $this->type = $type;
         // Set contacts
         $this->contacts = $contacts;
+
         // return object
         return $this;
     }
 
     /**
      * Set many to many sms sending format
-     *
-     * @param  array  $contacts=[[to=>'88017xxxxxxxx',message=>'message']];
      */
     public function manyToMany(array $contacts)
     {
         foreach ($contacts as $key => $value) {
             //  if message is not set or not string throw exception
             if ((! isset($value['message'])) || ! is_string($value['message'])) {
-                throw  new \Exception('Massage Not  Valid', 1014);
+                throw new \Exception('Massage Not  Valid', 1014);
             }
             // if to is not set or not valid number throw exception
             if ((! isset($value['to'])) || ! \preg_match("/^(?:\+88|88)?(01[3-9]\d{8})$/", $value['to'])) {
-                throw  new \Exception('Number Not  Valid', 1012);
+                throw new \Exception('Number Not  Valid', 1012);
             }
         }
         // Set contacts many to many format
@@ -199,14 +193,15 @@ class BulkSmsBd
     /**
      * If sms sent true return else throws Exception
      *
-     * @param $numbers
-     * @param $message
+     * @param  $numbers
+     * @param  $message
      */
     public function send()
     {
         // check if mode is log
         if ($this->mode() == 'log') {
             $this->logSMS();
+
             return true;
         }
         // check if message is set
@@ -231,6 +226,7 @@ class BulkSmsBd
                 'form_params' => $data,
             ]);
         }
+
         // validate response
         return $this->validateResponse(\json_decode($response->getBody()));
     }
@@ -254,78 +250,76 @@ class BulkSmsBd
     private function validateResponse($response)
     {
         switch ((string) $response->response_code) {
-            case  202:
+            case 202:
                 return $response;
-            case  1002:
+            case 1002:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('Sender Id/Masking Not Found', 1002);
-            case  1003:
+            case 1003:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('API Not Found', 1003);
-            case  1004:
+            case 1004:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('SPAM Detected', 1004);
-            case  1005:
+            case 1005:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('Internal Error', 1005);
-            case  1006:
+            case 1006:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('Internal Error', 1006);
-            case  1007:
+            case 1007:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('Balance Insufficient', 1007);
-            case  1008:
+            case 1008:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('Message is empty', 1008);
-            case  1009:
+            case 1009:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('Message Type Not Set (text/unicode)', 1009);
-            case  1010:
+            case 1010:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('Invalid User & Password', 1010);
-            case  1011:
+            case 1011:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('Invalid User Id', 1011);
-            case  1012:
+            case 1012:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('Invalid Number', 1012);
-            case  1013:
+            case 1013:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('API limit error', 1013);
-            case  1014:
+            case 1014:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('No matching template', 1014);
-            case  1015:
+            case 1015:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('Sender Id has not found Any Valid Gateway by api key', 1015);
-            case  1016:
+            case 1016:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('Sender Type Name Active Price Info not found by this sender id', 1016);
-            case  1017:
+            case 1017:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('Sender Type Name Price Info not found by this sender id', 1017);
-            case  1018:
+            case 1018:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('The Owner of this (username) Account is disabled', 1018);
-            case  1019:
+            case 1019:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('The (sender type name) Price of this (username) Account is disabled', 1019);
-            case  1020:
+            case 1020:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('The parent of this account is not found.', 1020);
-            case  1021:
+            case 1021:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('The parent active (sender type name) price of this account is not found.', 1021);
             default:
                 $this->logError('Validation Error', $response);
-                throw  new \Exception('Unknown', -1);
+                throw new \Exception('Unknown', -1);
         }
     }
 
     /**
      * Log error in laravel-bulk-sms-bd-log.log
-     *
-     * @param $response
      */
     private function logError($error, $response = [])
     {

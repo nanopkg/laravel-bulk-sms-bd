@@ -45,5 +45,5 @@ test('check BulkSmsBd OneToMany Job', function () {
 
 // Check BulkSmsBd Channel Test
 test('check BulkSmsBd Channel', function () {
-    $this->assertInstanceOf(\Nanopkg\BulkSmsBd\Broadcasting\BulkSmsBdChannel::class, new \Nanopkg\BulkSmsBd\Broadcasting\BulkSmsBdChannel());
+    $this->assertInstanceOf(\Nanopkg\BulkSmsBd\Broadcasting\BulkSmsBdChannel::class, new \Nanopkg\BulkSmsBd\Broadcasting\BulkSmsBdChannel);
 });
