@@ -4,8 +4,6 @@ includes:
 parameters:
     level: 4
     paths:
-        - config
-        - src
         - tests
     tmpDir: build/phpstan
     # checkOctaneCompatibility: true

@@ -11,5 +11,10 @@
         "smsapi",
         "smsapimany",
         "SYED"
-    ]
+    ],
+    "intelephense.environment.includePaths": [
+        "./vendor/pestphp",
+        "./vendor/phpunit/phpunit",
+        "./vendor/laravel"
+    ],
 }
