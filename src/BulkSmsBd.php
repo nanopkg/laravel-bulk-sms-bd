@@ -252,12 +252,15 @@ class BulkSmsBd
         switch ((string) $response->response_code) {
             case 202:
                 return $response;
+            case 1001:
+                $this->logError('Validation Error', $response);
+                throw new \Exception('Invalid Number', 1001);
             case 1002:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('Sender Id/Masking Not Found', 1002);
             case 1003:
                 $this->logError('Validation Error', $response);
-                throw new \Exception('API Not Found', 1003);
+                throw new \Exception('Please Required all fields/Contact Your System Administrator', 1003);
             case 1004:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('SPAM Detected', 1004);
@@ -266,7 +269,7 @@ class BulkSmsBd
                 throw new \Exception('Internal Error', 1005);
             case 1006:
                 $this->logError('Validation Error', $response);
-                throw new \Exception('Internal Error', 1006);
+                throw new \Exception('Balance Validity Not Available', 1006);
             case 1007:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('Balance Insufficient', 1007);
@@ -284,13 +287,13 @@ class BulkSmsBd
                 throw new \Exception('Invalid User Id', 1011);
             case 1012:
                 $this->logError('Validation Error', $response);
-                throw new \Exception('Invalid Number', 1012);
+                throw new \Exception('Masking SMS must be sent in Bengali', 1012);
             case 1013:
                 $this->logError('Validation Error', $response);
-                throw new \Exception('API limit error', 1013);
+                throw new \Exception('Sender Id has not found Gateway by api key', 1013);
             case 1014:
                 $this->logError('Validation Error', $response);
-                throw new \Exception('No matching template', 1014);
+                throw new \Exception('Sender Type Name not found using this sender by api key', 1014);
             case 1015:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('Sender Id has not found Any Valid Gateway by api key', 1015);
@@ -312,6 +315,12 @@ class BulkSmsBd
             case 1021:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('The parent active (sender type name) price of this account is not found.', 1021);
+            case 1031:
+                $this->logError('Validation Error', $response);
+                throw new \Exception('Your Account Not Verified, Please Contact Administrator.', 1031);
+            case 1032:
+                $this->logError('Validation Error', $response);
+                throw new \Exception('IP Not Whitelisted', 1032);
             default:
                 $this->logError('Validation Error', $response);
                 throw new \Exception('Unknown', -1);
